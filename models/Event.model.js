@@ -1,25 +1,28 @@
 const { Schema, model } = require("mongoose");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const userSchema = new Schema(
+const eventSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
+    title: {
       type: String,
       required: true,
     },
-    profileImage: {
+    location: {
       type: String,
+      required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
+    numberOfRequiredPlayers: {
+      type: Number,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    players: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -27,6 +30,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = model("User", userSchema);
+const Event = model("Event", eventSchema);
 
-module.exports = User;
+module.exports = Event;
