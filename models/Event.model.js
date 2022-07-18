@@ -23,7 +23,12 @@ const eventSchema = new Schema(
       ref: "User",
     },
     players: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    typeOfSport: {
+      type: String,
+      enum: ["football", "basketball", "tennis"],
+    },
   },
+
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,

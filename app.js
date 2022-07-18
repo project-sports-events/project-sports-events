@@ -23,12 +23,22 @@ const projectName = "project-sports-event";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+const userLogin = require("./middleware/checkUserLogin");
+app.use("/", userLogin);
+
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+
+const eventRoutes = require("./routes/events.routes");
+app.use("/events", eventRoutes);
+
+const profileRoutes = require("./routes/profile.routes");
+app.use("/profile", profileRoutes);
+// app.use("/profile", userLogin);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
