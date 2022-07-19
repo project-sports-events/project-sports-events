@@ -23,8 +23,8 @@ const projectName = "project-sports-event";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
-const userLogin = require("./middleware/checkUserLogin");
-app.use("/", userLogin);
+const findUserSession = require("./middleware/checkUserLoginDetails");
+app.use("/", findUserSession);
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");

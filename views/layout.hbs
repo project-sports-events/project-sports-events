@@ -22,6 +22,9 @@
       <li><a href="/auth/login">Login</a></li>
       {{/if}}
     </ul>
+    {{#if session.username}}
+    <p>Welcome {{session.username}}</p>
+    {{/if}}
   </nav>
   {{{body}}}
 

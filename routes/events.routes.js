@@ -30,8 +30,12 @@ router.post("/create-event", (req, res, next) => {
     author,
     date,
   })
-    .then(() => {
+    .then((data) => {
+      console.log(data);
+      data.players.push(data.author);
+      data.save();
       Event.find().then((data) => {
+        console.log(data);
         res.redirect("/events"), { data };
       });
     })
@@ -65,30 +69,24 @@ router.post("/:id", (req, res, next) => {
   Event.findById(eventId).then((data) => {
     const playersArr = data.players;
     console.log(playersArr.indexOf(userId));
-    if (playersArr.indexOf(userId) === -1) {
-      data.players.push(userId);
-      data.save();
+    console.log(data.author);
+    if (data.numberOfRequiredPlayers > 0) {
+      if (playersArr.indexOf(userId) === -1) {
+        data.players.push(userId);
+        data.numberOfRequiredPlayers -= 1;
+        data.save();
+        res.redirect("/profile");
+      } else {
+        console.log("user already exists");
+        res.redirect("/profile");
+      }
     } else {
-      console.log("user already exists");
+      console.log("player list is full");
+      res.redirect(`/events/${eventId}`);
     }
 
-    res.redirect(`/events/${eventId}`);
     // console.log(playersArr);
   });
-  // Event.findByIdAndUpdate(
-  //   eventId,
-  //   { $push: { players: userId } },
-  //   { new: true }
-  // )
-  //   .then(() => {
-  //     console.log("updated document");
-  //     //  res.redirect("/:id")
-  //   })
-  //   .catch((err) => console.log(err));
-
-  // Event.find({ players: { $elemMatch: { _id: userId } } }).then((data) => {
-  //   console.log(data);
-  // });
 });
 
 module.exports = router;
