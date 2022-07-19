@@ -4,7 +4,10 @@ const Event = require("../models/Event.model");
 
 router.get("/", (req, res, next) => {
   Event.find().then((data) => {
-    res.render("events", data);
+    // console.log({ data });
+    // const id = data._id;
+    // console.log(id);
+    res.render("events", { data });
   });
 });
 
@@ -13,7 +16,7 @@ router.get("/create-event", (req, res, next) => {
 });
 
 router.post("/create-event", (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { typeOfSport, title, location, numberOfRequiredPlayers, price, date } =
     req.body;
   const author = req.session.user._id;
@@ -29,7 +32,7 @@ router.post("/create-event", (req, res, next) => {
   })
     .then(() => {
       Event.find().then((data) => {
-        res.redirect("/events"), data;
+        res.redirect("/events"), { data };
       });
     })
     // .then(
@@ -41,6 +44,14 @@ router.post("/create-event", (req, res, next) => {
     });
 
   console.log(typeOfSport);
+});
+
+router.get("/:id", (req, res, next) => {
+  console.log(req.params);
+  const { id } = req.params;
+  Event.find({ _id: id }).then((data) => {
+    console.log(data), res.render("event-details", { data });
+  });
 });
 
 module.exports = router;
