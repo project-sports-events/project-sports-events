@@ -1,1 +1,29 @@
 <h1>Create event</h1>
+
+<form action="/events/create-event" method="POST">
+
+    <select name="typeOfSport" id="type-of-sport">
+        <option value="" disabled selected>Select your Sport</option>
+        <option value="football">football</option>
+        <option value="basketball">basketball</option>
+        <option value="tennis">tennis</option>
+    </select>
+    <br>
+
+    <input type="text" id="event-title" name="title" placeholder="title"><br>
+
+    <input type="text" id="event-location" name="location" placeholder="location"><br>
+    <input type="number" id="event-required-players" min="0" name="numberOfRequiredPlayers"
+        placeholder="No. of required players"><br>
+    <input type="number" id="event-price" name="price" min="0" placeholder="price"><br>
+
+    {{!-- <input type="number" id="event-time-hours" min="0" max="23" name="hours" placeholder="Select hour of event">
+
+    <input type="number" id="event-time-minutes" min="0" max="59" name="minutes" placeholder="Select minute of event">
+    --}}
+
+    <label for="event-time">Event: Date & Time</label>
+    <input type="datetime-local" id="event-time" name="date">
+
+    <input type="submit" value="Submit">
+</form>

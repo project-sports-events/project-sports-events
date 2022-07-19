@@ -1,1 +1,16 @@
 <h1>Hello World</h1>
+
+<a href="/events/create-event">create event</a>
+
+{{#each this}}
+<div>
+    <h1>{{typeOfSport}}</h1>
+    <h2>{{title}}</h2>
+    <h3>{{author.username}}</h3>
+    <p>{{location}}</p>
+    <p>{{price}}</p>
+    <p>{{numberOfRequiredPlayers}}</p>
+</div>
+
+
+{{/each}}
