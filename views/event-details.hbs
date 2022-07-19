@@ -1,16 +1,17 @@
 <h1>Event details page</h1>
 
-{{#each data}}
+
 <div>
-    <h1>{{this.typeOfSport}}</h1>
-    <h2>{{this.title}}</h2>
-    <h3>{{this.author.username}}</h3>
-    <p>{{this.location}}</p>
-    <p>{{this.price}}</p>
-    <p>{{this.numberOfRequiredPlayers}}</p>
-    <p>{{this.date}}</p>
-    <p>{{this.players}}</p>
-    <a href="/events/{{this._id}}"></a>
+    <h1>{{typeOfSport}}</h1>
+    <h2>{{title}}</h2>
+    <h3>{{author.username}}</h3>
+    <p>{{location}}</p>
+    <p>{{price}}</p>
+    <p>{{numberOfRequiredPlayers}}</p>
+    <p>{{date}}</p>
+    {{#each players}}
+    <p>{{this.username}}</p>
+    {{/each}}
 
     <form action="/events/{{this._id}}" method="POST">
 
@@ -20,5 +21,3 @@
 
 
 </div>
-
-{{/each}}
