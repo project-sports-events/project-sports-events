@@ -9,7 +9,15 @@
     <p>{{this.price}}</p>
     <p>{{this.numberOfRequiredPlayers}}</p>
     <p>{{this.date}}</p>
+    <p>{{this.players}}</p>
     <a href="/events/{{this._id}}"></a>
+
+    <form action="/events/{{this._id}}" method="POST">
+
+        <button type="submit" name="players">Book</button>
+    </form>
+
+
 
 </div>
 

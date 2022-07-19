@@ -54,4 +54,20 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
+router.post("/:id", (req, res, next) => {
+  const eventId = req.params.id;
+  const userId = req.session.user._id;
+
+  Event.findByIdAndUpdate(
+    eventId,
+    { $push: { players: userId } },
+    { new: true }
+  )
+    .then(() => {
+      console.log("updated document");
+      //  res.redirect("/:id")
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;
