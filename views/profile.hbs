@@ -1,6 +1,17 @@
 <p>{{session.username}}</p>
 <img src={{session.profileImage}} alt="">
 
-<h1>Pending Games</h1>
+<h1>Your bookings</h1>
 
-<h1>Confirmed Games</h1>
+{{#each this}}
+<div>
+    <h1>{{this.typeOfSport}}</h1>
+    <h2>{{this.title}}</h2>
+    <p>{{this.location}}</p>
+    <p>{{this.price}}</p>
+    <p>{{date}}</p>
+
+
+</div>
+
+{{/each}}

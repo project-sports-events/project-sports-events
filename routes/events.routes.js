@@ -89,4 +89,7 @@ router.post("/:id", (req, res, next) => {
   });
 });
 
+//confirmed booking page
+router.get("/confirmed-booking/:id");
+
 module.exports = router;
