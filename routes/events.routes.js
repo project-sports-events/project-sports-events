@@ -3,20 +3,25 @@ const Event = require("../models/Event.model");
 /* GET home page */
 
 router.get("/", (req, res, next) => {
-  Event.find().then((data) => {
-    // console.log({ data });
-    // const id = data._id;
-    // console.log(id);
-    res.render("events", { data });
-  });
+  Event.find()
+    .then((data) => {
+      const eventsPending = [];
+      data.forEach((element) => {
+        // console.log(element.numberOfRequiredPlayers);
+        if (element.numberOfRequiredPlayers > 0) {
+          eventsPending.push(element);
+        }
+      });
+      return eventsPending;
+    })
+    .then((eventsPending) => {
+      console.log("these are ", eventsPending);
+      res.render("events", { eventsPending });
+    });
 });
 
 router.get("/search", (req, res, next) => {
-  console.log(req.query);
   const { typeOfSport, location, price } = req.query;
-  console.log(typeOfSport);
-  console.log(location);
-  console.log(price);
 
   const filterObj = {};
 
@@ -32,14 +37,22 @@ router.get("/search", (req, res, next) => {
     filterObj.price = price;
   }
 
-  console.log(filterObj);
   if (!filterObj) {
     res.redirect("/events");
   } else {
     Event.find(filterObj)
       .then((data) => {
-        console.log(data);
-        res.render("events-search", { data });
+        const eventsPending = [];
+        data.forEach((element) => {
+          // console.log(element.numberOfRequiredPlayers);
+          if (element.numberOfRequiredPlayers > 0) {
+            eventsPending.push(element);
+          }
+        });
+        return eventsPending;
+      })
+      .then((eventsPending) => {
+        res.render("events", { eventsPending });
       })
       .catch((err) => {
         console.log(err);
