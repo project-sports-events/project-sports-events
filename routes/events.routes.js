@@ -107,6 +107,7 @@ router.get("/:id", (req, res, next) => {
   // console.log(id);
   Event.findById(id)
     .populate("players")
+    .populate("author")
     .then((data) => {
       const dataObj = data;
       const playersArr = data.players;
