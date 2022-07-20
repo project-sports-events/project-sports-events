@@ -1,17 +1,34 @@
-<p>{{session.username}}</p>
 <img src={{session.profileImage}} alt="">
+<p>{{session.username}}</p>
 
-<h1>Your bookings</h1>
-
-{{#each this}}
 <div>
-    <h1>{{this.typeOfSport}}</h1>
-    <h2>{{this.title}}</h2>
-    <p>{{this.location}}</p>
-    <p>{{this.price}}</p>
-    <p>{{date}}</p>
+    <h1>Pending bookings</h1>
+
+    {{#each this.pendingEvents}}
+    <div>
+        <h1>{{this.typeOfSport}}</h1>
+        <h2>{{this.title}}</h2>
+        <p>{{this.location}}</p>
+        <p>{{this.price}}</p>
+        <p>{{date}}</p>
+        <a href="/events/{{this._id}}">Show details</a>
+    </div>
+    {{/each}}
 
 
 </div>
 
-{{/each}}
+<div>
+    <h1>Confirmed bookings</h1>
+    {{#each this.confirmedEvents}}
+    <div>
+        <h1>{{this.typeOfSport}}</h1>
+        <h2>{{this.title}}</h2>
+        <p>{{this.location}}</p>
+        <p>{{this.price}}</p>
+        <p>{{date}}</p>
+        <a href="/events/{{this._id}}">Show details</a>
+    </div>
+    {{/each}}
+
+</div>

@@ -4,19 +4,26 @@
 <div>
     <h1>{{typeOfSport}}</h1>
     <h2>{{title}}</h2>
-    <h3>{{author.username}}</h3>
-    <p>{{location}}</p>
-    <p>{{price}}</p>
-    <p>{{numberOfRequiredPlayers}}</p>
-    <p>{{date}}</p>
-    {{#each players}}
-    <p>{{this.username}}</p>
-    {{/each}}
+    <h3>Creator of event: {{author.username}}</h3>
+    <p>Location: {{location}}</p>
+    <p>Price: £{{price}}</p>
+    <p>Required no. of players: {{numberOfRequiredPlayers}}</p>
+    <p>Date: {{dateString}}</p>
+    <p>Time: {{timeString}}</p>
+    <div>
+        <h3>Current players</h3>
+        {{#each players}}
+        <p>{{this.username}}</p>
+        {{/each}}
+    </div>
+    {{#if isBooked}}
+    <h3>you are booked &#9989;</h3>
+    {{else}}
 
-    <form action="/events/{{this._id}}" method="POST">
+    <form action="/events/{{this._id}}/book" method="POST">
 
         <button type="submit" name="players" id="book-button">Book</button>
     </form>
-
+    {{/if}}
 
 </div>

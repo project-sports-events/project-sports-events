@@ -1,6 +1,6 @@
 <h1>Create event</h1>
 
-<form action="/events/create-event" method="POST">
+<form action="/events/create" method="POST">
 
     <select name="typeOfSport" id="type-of-sport">
         <option value="" disabled selected>Select your Sport</option>
@@ -25,5 +25,5 @@
     <label for="event-time">Event: Date & Time</label>
     <input type="datetime-local" id="event-time" name="date">
 
-    <input type="submit" value="Submit">
+    <button type="submit">Submit</button>
 </form>

@@ -8,22 +8,29 @@ router.get("/", userLogin, (req, res, next) => {
   const eventId = req.params.id;
   const userId = req.session.user._id;
 
-  const userEvents = [];
+  const userEvents = {
+    pendingEvents: [],
+    confirmedEvents: [],
+  };
 
   Event.find()
     .then((data) => {
-      // console.log(data);
-      // console.log(data.length);
       data.forEach((element) => {
-        if (element.players.indexOf(userId) > -1) {
-          // console.log("user is in this event ", element);
-          userEvents.push(element);
-          // console.log("this is array of user events ", userEvents);
+        if (
+          element.players.indexOf(userId) > -1 &&
+          element.numberOfRequiredPlayers > 0
+        ) {
+          userEvents.pendingEvents.push(element);
+        } else if (
+          element.players.indexOf(userId) > -1 &&
+          element.numberOfRequiredPlayers === 0
+        ) {
+          userEvents.confirmedEvents.push(element);
         }
       });
-      // console.log("this is all user events", userEvents);
+      return userEvents;
     })
-    .then(() => {
+    .then((userEvents) => {
       console.log(userEvents);
       res.render("profile", userEvents);
     });
