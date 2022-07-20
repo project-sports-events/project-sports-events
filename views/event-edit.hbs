@@ -1,0 +1,21 @@
+<h2>{{title}}</h2>
+<form action="/events/{{_id}}/event-edit" method="post">
+<select name="typeOfSport" id="type-of-sport">
+        <option value="" disabled selected>Select your Sport</option>
+        <option value="football">football</option>
+        <option value="basketball">basketball</option>
+        <option value="tennis">tennis</option>
+    </select>
+    <br>
+
+    <input type="text" id="event-title" name="title" value="{{title}}"><br>
+
+    <input type="text" id="event-location" name="location" value="{{location}}"><br>
+    <input type="number" id="event-required-players" min="0" name="numberOfRequiredPlayers"
+        value="{{numberOfRequiredPlayers}}"><br>
+    <input type="number" id="event-price" name="price" min="0" value="{{price}}"><br>
+    <label for="event-time">Event: Date & Time</label>
+    <input type="datetime-local" id="event-time" name="date" value="{{dateFormat}}">
+
+<button type ='submit'>Save changes</button>
+</form>
