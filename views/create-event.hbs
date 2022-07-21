@@ -2,6 +2,7 @@
 
 <form action="/events/create" method="POST">
 
+    <label for="type-of-sport">Select sport:</label>
     <select name="typeOfSport" id="type-of-sport">
         <option value="" disabled selected>Select your Sport</option>
         <option value="football">football</option>
@@ -10,15 +11,25 @@
     </select>
     <br>
 
+    <label for="event-title">Title:</label>
     <input type="text" id="event-title" name="title" placeholder="title"><br>
 
+    <label for="event-location">Location:</label>
     <input type="text" id="event-location" name="location" placeholder="location"><br>
+
+    <label for="event-required-players">No. of required players</label>
     <input type="number" id="event-required-players" min="0" name="numberOfRequiredPlayers"
         placeholder="No. of required players"><br>
+
+    <label for="event-price">Price:</label>
     <input type="number" id="event-price" name="price" min="0" placeholder="price"><br>
 
-    <label for="event-time">Event: Date & Time</label>
-    <input type="datetime-local" id="event-time" name="date">
+    <label for="event-date">Date:</label>
+    <input type="date" id="event-date" name="date">
 
+    <label for="event-time">Time:</label>
+    <input type="time" id="event-time" name="time">
+
+    <br>
     <button type="submit">Submit</button>
 </form>

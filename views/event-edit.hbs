@@ -1,6 +1,8 @@
 <h2>{{title}}</h2>
 <form action="/events/{{_id}}/event-edit" method="post">
-    <select name="typeOfSport" id="type-of-sport">
+
+    <label for="edit-type-of-sport">Select sport:</label>
+    <select name="typeOfSport" id="edit-type-of-sport">
         <option value="" disabled selected>Select your Sport</option>
         <option value="football">football</option>
         <option value="basketball">basketball</option>
@@ -8,14 +10,25 @@
     </select>
     <br>
 
-    <input type="text" id="event-title" name="title" value="{{title}}"><br>
+    <label for="edit-title">Title:</label>
+    <input type="text" id="edit-title" name="title" value="{{title}}"><br>
 
-    <input type="text" id="event-location" name="location" value="{{location}}"><br>
-    <input type="number" id="event-required-players" min="0" name="numberOfRequiredPlayers"
+    <label for="edit-location">Location:</label>
+    <input type="text" id="edit-location" name="location" value="{{location}}"><br>
+
+    <label for="edit-required-players">No. of required players:</label>
+    <input type="number" id="edit-required-players" min="0" name="numberOfRequiredPlayers"
         value="{{numberOfRequiredPlayers}}"><br>
-    <input type="number" id="event-price" name="price" min="0" value="{{price}}"><br>
-    <label for="event-time">Event: Date & Time</label>
-    <input type="datetime-loc" id="event-time" name="date" value="{{dateFormat}}">
+
+    <label for="edit-price">Price:</label>
+    <input type="number" id="edit-price" name="price" min="0" value="{{price}}"><br>
+
+
+    <label for="edit-date">Date:</label>
+    <input type="date" id="edit-date" name="date" value="{{date}}">
+    <label for="edit-time">Time:</label>
+    <input type="time" id="edit-time" name="time" value="{{time}}">
+
 
     <button type='submit'>Save changes</button>
 </form>

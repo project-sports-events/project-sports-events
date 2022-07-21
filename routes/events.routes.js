@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Event = require("../models/Event.model");
+// const isLoggedIn = require("../middleware/isLoggedIn");
 /* GET home page */
 
 router.get("/", (req, res, next) => {
@@ -66,8 +67,15 @@ router.get("/create", (req, res, next) => {
 
 router.post("/create", (req, res, next) => {
   // console.log(req.body);
-  const { typeOfSport, title, location, numberOfRequiredPlayers, price, date } =
-    req.body;
+  const {
+    typeOfSport,
+    title,
+    location,
+    numberOfRequiredPlayers,
+    price,
+    date,
+    time,
+  } = req.body;
   const author = req.session.user._id;
 
   Event.create({
@@ -78,6 +86,7 @@ router.post("/create", (req, res, next) => {
     price,
     author,
     date,
+    time,
   })
     .then((data) => {
       console.log(data);
@@ -109,7 +118,6 @@ router.get("/:id", (req, res, next) => {
     .populate("players")
     .populate("author")
     .then((data) => {
-      const dataObj = data;
       const playersArr = data.players;
       let isBooked = false;
       playersArr.forEach((element) => {
@@ -119,16 +127,9 @@ router.get("/:id", (req, res, next) => {
       });
       // console.log("this is playersArr", playersArr);
       // console.log(data.isBooked);
-      dataObj.isBooked = isBooked;
-      console.log(dataObj.date);
-      const dateFromObj = JSON.stringify(dataObj.date);
+      data.isBooked = isBooked;
 
-      console.log(dateFromObj);
-      const dateString = dateFromObj.substring(1, dateFromObj.indexOf("T"));
-      const timeString = dateFromObj.substring(12, 17);
-      dataObj.dateString = dateString;
-      dataObj.timeString = timeString;
-      res.render("event-details", dataObj);
+      res.render("event-details", data);
     });
 });
 
@@ -171,13 +172,12 @@ router.get("/:id/event-edit", (req, res, next) => {
     .then((data) => {
       console.log("this is ", data);
       // console.log(data.date);
-      const dateString = JSON.stringify(data.date);
-      const dateFormat = dateString.substring(1, 17);
-      data.dateFormat = dateFormat;
+
       res.render("event-edit", data);
     })
     .catch((error) => next(error));
 });
+
 router.post("/:id/event-edit", (req, res, next) => {
   const eventId = req.params.id;
   const {
@@ -188,6 +188,7 @@ router.post("/:id/event-edit", (req, res, next) => {
     price,
     author,
     date,
+    time,
   } = req.body;
   Event.findByIdAndUpdate(
     eventId,
@@ -199,6 +200,7 @@ router.post("/:id/event-edit", (req, res, next) => {
       price,
       author,
       date,
+      time,
     },
     { new: true }
   )
