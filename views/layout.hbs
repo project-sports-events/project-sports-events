@@ -13,13 +13,17 @@
 <body>
 
   <nav class="navbar navbar-expand-md ">
-    <h4 class="navbar-brand">Sports Day</h4>
+    <a class="navbar-brand" href="/">
+      <img src="/images/logo.png" width="60" height="60" alt="">
+    </a>
     <div class="collapse navbar-collapse d-flex">
       <div class="mr-auto p-2 bd-highlight">
         <ul class="navbar-nav">
-          <li class="nav-item"><a href="/" class="nav-link cool-link">Home</a></li>
+
+          {{#if session.username}}
           <li class="nav-item"><a href="/events" class="nav-link">Events</a></li>
           <li class="nav-item"><a href="/events/create" class="nav-link">Create event</a></li>
+          {{/if}}
         </ul>
       </div>
 

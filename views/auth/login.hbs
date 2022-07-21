@@ -5,28 +5,38 @@
             <div class="col-12 col-lg-9 col-xl-7">
                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                   <div class="card-body p-4 p-md-5">
-                     <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Log In</h3>
+                     <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" style="text-align: center;">Log In</h3>
+
                      <form action="/auth/login" method="POST">
                         <div class="row">
-                           <div class="col-md-6 mb-4">
+                           <div class="col-md-12 mb-4">
                               <div class="form-outline">
 
-                                 <label class="form-label" for="username"> Username <input type="text" id="username"
-                                       class="form-control form-control-lg" name="username"></label>
+                                 <label class="form-label" for="username" style="width: 100% ;"> Username <input
+                                       type="text" id="username" class="form-control form-control-lg" name="username"
+                                       oninvalid="this.setCustomValidity('Please enter a username')"
+                                       oninput="this.setCustomValidity('')" required></label>
                               </div>
                            </div>
                         </div>
                         <div class="row">
-                           <div class="col-md-6 mb-4 d-flex align-items-center">
+                           <div class="col-md-12 mb-4 d-flex align-items-center">
                               <div class="form-outline datepicker w-100">
-                                 <label for="password" class="form-label"> Password <input type="password"
-                                       name="password" class="form-control form-control-lg" id="Password"></label>
+                                 <label for="password" class="form-label" style="width: 100% ;"> Password <input
+                                       type="password" name="password" class="form-control form-control-lg"
+                                       id="Password" oninvalid="this.setCustomValidity('Please enter a username')"
+                                       oninput="this.setCustomValidity('')" required></label>
                               </div>
                            </div>
                         </div>
+                        {{#if errorMessage}}
+                        <p style="font-style: italic ;">{{errorMessage}}</p>
+                        {{/if}}
                         <div class="mt-4 pt-2">
-                           <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+                           <input class="btn btn-primary btn-lg" type="submit" value="Submit" style="width: 100% ;" />
                         </div>
+
+                        <a href="/auth/signup">Or Sign Up</a>
                      </form>
                   </div>
                </div>
@@ -35,7 +45,3 @@
       </div>
    </section>
 </form>
-
-{{#if errorMessage}}
-{{errorMessage}}
-{{/if}}
