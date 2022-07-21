@@ -7,10 +7,10 @@ const eventSchema = new Schema(
       type: String,
       required: true,
     },
-    location: {
-      type: String,
-      required: true,
-    },
+    // location: {
+    //   type: String,
+    //   required: true,
+    // },
     price: {
       type: Number,
       required: true,
@@ -21,6 +21,9 @@ const eventSchema = new Schema(
     },
     numberOfRequiredPlayers: {
       type: Number,
+    },
+    location: {
+      type: String,
     },
     author: {
       type: Schema.Types.ObjectId,

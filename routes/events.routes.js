@@ -163,6 +163,55 @@ router.post("/:id/book", (req, res, next) => {
   });
 });
 
-//filter form
+// form edit:
+router.get("/:id/event-edit", (req, res, next) => {
+  const eventId = req.params.id;
+  console.log(eventId);
+  Event.findById(eventId)
+    .then((data) => {
+      console.log("this is ", data);
+      // console.log(data.date);
+      const dateString = JSON.stringify(data.date);
+      const dateFormat = dateString.substring(1, 17);
+      data.dateFormat = dateFormat;
+      res.render("event-edit", data);
+    })
+    .catch((error) => next(error));
+});
+router.post("/:id/event-edit", (req, res, next) => {
+  const eventId = req.params.id;
+  const {
+    typeOfSport,
+    title,
+    location,
+    numberOfRequiredPlayers,
+    price,
+    author,
+    date,
+  } = req.body;
+  Event.findByIdAndUpdate(
+    eventId,
+    {
+      typeOfSport,
+      title,
+      location,
+      numberOfRequiredPlayers,
+      price,
+      author,
+      date,
+    },
+    { new: true }
+  )
+    .then((data) => res.redirect(`/events/${eventId}`))
+    .catch((error) => next(error));
+});
 
 module.exports = router;
+
+// form delete:
+router.post("/:id/event-delete", (req, res, next) => {
+  const eventId = req.params.id;
+  Event.findByIdAndDelete(eventId)
+    .then(() => res.redirect("/"))
+    .catch((error) => next(error));
+});
