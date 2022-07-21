@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/signup.css" />
+  <link rel="stylesheet" href="/stylesheets/login.css" />
 </head>
 
 <body>
@@ -27,21 +29,21 @@
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          {{#if session.username}}
+      {{#if session.username}}
           {{session.username}}
-          {{else}}
+      {{else}}
           Login
-          {{/if}}
+      {{/if}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {{#if session.username}}
+    {{#if session.username}}
           <a href="/profile" class="dropdown-item">Profile Page</a>
           <a href="/auth/logout" class="dropdown-item">Log Out</a>
 
           {{else}}
           <a href="/auth/signup" class="dropdown-item">Sign Up</a>
           <a href="/auth/login" class="dropdown-item">Login</a>
-          {{/if}}
+    {{/if}}
         </div>
       </div>
 
