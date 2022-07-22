@@ -53,7 +53,7 @@ router.get("/", (req, res, next) => {
         eventsPending[i].chosenSport = chosenSportsArr[i];
       }
       //CHECK TYPE OF SPORT
-      console.log("im here now, ", eventsPending[0].chosenSport);
+    
       res.render("events", { eventsPending });
     });
 });
@@ -111,7 +111,7 @@ router.get("/search", (req, res, next) => {
 
         for (let i = 0; i < eventsPending.length; i++) {
           eventsPending[i].daysLeft = totalDays[i];
-          console.log(eventsPending[i].daysLeft);
+          // console.log(eventsPending[i].daysLeft);
         }
         res.render("events", { eventsPending });
       })
