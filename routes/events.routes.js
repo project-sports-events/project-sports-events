@@ -17,6 +17,19 @@ router.get("/", (req, res, next) => {
       return eventsPending;
     })
     .then((eventsPending) => {
+      const chosenSportsArr = [];
+
+      console.log(eventsPending);
+      eventsPending.forEach((element) => {
+        if (element.typeOfSport === "football") {
+          chosenSportsArr.push("9917");
+        } else if (element.typeOfSport === "tennis") {
+          chosenSportsArr.push("127934");
+        } else if (element.typeOfSport === "basketball") {
+          chosenSportsArr.push("127936");
+        }
+      });
+
       const eventDates = [];
       const difference = [];
       let date_2 = new Date();
@@ -37,10 +50,10 @@ router.get("/", (req, res, next) => {
 
       for (let i = 0; i < eventsPending.length; i++) {
         eventsPending[i].daysLeft = totalDays[i];
-        console.log(eventsPending[i].daysLeft);
+        eventsPending[i].chosenSport = chosenSportsArr[i];
       }
       //CHECK TYPE OF SPORT
-
+      console.log("im here now, ", eventsPending[0].chosenSport);
       res.render("events", { eventsPending });
     });
 });

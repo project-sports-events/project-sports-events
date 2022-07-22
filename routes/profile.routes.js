@@ -28,6 +28,48 @@ router.get("/", userLogin, (req, res, next) => {
           userEvents.confirmedEvents.push(element);
         }
       });
+
+      //STORE SPORT IN ARRAY
+      const pendingChosenSportsArr = [];
+      const confirmedChosenSportsArr = [];
+      data.forEach((element) => {
+        if (
+          element.typeOfSport === "football" &&
+          element.numberOfRequiredPlayers > 0
+        ) {
+          pendingChosenSportsArr.push("9917");
+        } else if (
+          element.typeOfSport === "tennis" &&
+          element.numberOfRequiredPlayers > 0
+        ) {
+          pendingChosenSportsArr.push("127934");
+        } else if (
+          element.typeOfSport === "basketball" &&
+          element.numberOfRequiredPlayers > 0
+        ) {
+          pendingChosenSportsArr.push("127936");
+        } else if (
+          element.typeOfSport === "football" &&
+          element.numberOfRequiredPlayers === 0
+        ) {
+          confirmedChosenSportsArr.push("9917");
+        } else if (
+          element.typeOfSport === "tennis" &&
+          element.numberOfRequiredPlayers === 0
+        ) {
+          confirmedChosenSportsArr.push("127934");
+        } else if (
+          element.typeOfSport === "basketball" &&
+          element.numberOfRequiredPlayers === 0
+        ) {
+          confirmedChosenSportsArr.push("127936");
+        }
+      });
+
+      console.log("pending", pendingChosenSportsArr);
+      console.log("confirmed", confirmedChosenSportsArr);
+      // console.log(data);
+
       const eventDatesPending = [];
       const eventDatesConfirmed = [];
       const differencePending = [];
@@ -48,6 +90,7 @@ router.get("/", userLogin, (req, res, next) => {
       });
       for (let i = 0; i < userEvents.pendingEvents.length; i++) {
         userEvents.pendingEvents[i].daysLeft = totalDaysPending[i];
+        userEvents.pendingEvents[i].chosenSport = pendingChosenSportsArr[i];
         // console.log(userEvents.pendingEvents[i].daysLeft);
       }
 
@@ -68,6 +111,7 @@ router.get("/", userLogin, (req, res, next) => {
       });
       for (let i = 0; i < userEvents.confirmedEvents.length; i++) {
         userEvents.confirmedEvents[i].daysLeft = totalDaysConfirmed[i];
+        userEvents.confirmedEvents[i].chosenSport = confirmedChosenSportsArr[i];
         // console.log(userEvents.pendingEvents[i].daysLeft);
       }
 

@@ -102,6 +102,11 @@ nav {
 }
 
 /* STYLING CARDS */
+
+.badge span {
+  font-size: 20px;
+}
+
 .events-container {
   /* background-color: orange;
   border-radius: 1px; */
@@ -335,6 +340,10 @@ nav {
 
 .hover-effect a {
   color: grey;
+}
+
+.hover-effect a:hover {
+  box-shadow: inset 0 -1px 0 0 orange; 
 }
 
 .profile-nav {
