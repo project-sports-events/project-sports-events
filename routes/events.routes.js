@@ -53,7 +53,7 @@ router.get("/", (req, res, next) => {
         eventsPending[i].chosenSport = chosenSportsArr[i];
       }
       //CHECK TYPE OF SPORT
-      console.log("im here now, ", eventsPending[0].chosenSport);
+      // console.log("im here now, ", eventsPending[0].chosenSport);
       res.render("events", { eventsPending });
     });
 });
