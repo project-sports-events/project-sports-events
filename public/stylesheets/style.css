@@ -216,9 +216,9 @@ nav {
 .profile-bookings {
   width: 70%;
   height: 100%;
-
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
   
 }
 
@@ -305,6 +305,38 @@ nav {
   color: white;
 }
 
+/* STYLING CURRENT PLAYERS IMAGE */
+
+.current-players-image {
+  display: flex;
+
+}
+.current-players-image img {
+  width: 35px;
+  height: 35px;
+  border-radius: 15px;
+}
 
 
+.button-event-details {
+  width: 30%;
+}
 
+.hover-effect {
+  position: relative;
+    top: 0;
+    height: 60px;
+    padding-top: 10px;
+    font-size: 20px;
+    margin: 0 10px;
+    /* box-sizing: border-box; */
+    
+}
+
+.hover-effect a {
+  color: grey;
+}
+
+.profile-nav {
+  padding-right: 20px;
+}

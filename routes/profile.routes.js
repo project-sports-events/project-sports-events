@@ -80,4 +80,23 @@ router.get("/", userLogin, (req, res, next) => {
     });
 });
 
+router.get("/edit", (req, res, next) => {
+  const userId = req.session.user._id;
+  console.log(userId);
+  User.findById(userId).then((data) => {
+    console.log(data);
+    res.render("profile-edit", data);
+  });
+});
+router.post("/edit", (req, res, next) => {
+  console.log(req.body);
+  const { profileImage } = req.body;
+  console.log(profileImage);
+  const userId = req.session.user._id;
+  User.findById(userId).then((data) => {
+    data.profileImage = `/images/${profileImage}`;
+    data.save();
+    res.redirect("/profile");
+  });
+});
 module.exports = router;

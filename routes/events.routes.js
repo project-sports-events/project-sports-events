@@ -222,7 +222,7 @@ router.get("/:id", (req, res, next) => {
       // console.log(data.isBooked);
       data.isBooked = isBooked;
       data.isCreator = isCreator;
-      console.log("are they creator", data.isCreator);
+      console.log("i am here now", data);
       res.render("event-details", data);
     });
 });
@@ -260,7 +260,7 @@ router.post("/:id/book", (req, res, next) => {
 
 //Remove user from booking
 
-router.post("/:id/remove", (req, res, next) => {
+router.post("/:id/cancel", (req, res, next) => {
   const eventId = req.params.id;
   const userId = req.session.user._id;
 

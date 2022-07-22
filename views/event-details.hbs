@@ -12,24 +12,25 @@
 
             {{#if isBooked}}
             <h3>Booked &#9989;</h3>
-            <form action="/events/{{_id}}/remove" method="post">
-                <button type="submit" class="btn btn-secondary">Remove myself</button>
+            <form action="/events/{{_id}}/cancel" method="post">
+                <button type="submit" class="btn btn-danger button-event-details">Cancel booking</button>
             </form>
             {{else}}
 
             <form action="/events/{{this._id}}/book" method="POST">
 
-                <button type="submit" name="players" id="book-button" class="btn btn-success">Book</button>
+                <button type="submit" name="players" id="book-button"
+                    class="btn btn-success button-event-details">Book</button>
             </form>
             {{/if}}
 
             {{#if isCreator}}
 
             <form action="/events/{{_id}}/edit" method="GET">
-                <button type="submit" class="btn btn-secondary">Edit event</button>
+                <button type="submit" class="btn btn-secondary button-event-details">Edit event</button>
             </form>
             <form action="/events/{{_id}}/delete" method="POST">
-                <button type="submit" class="btn btn-warning">Delete event</button>
+                <button type="submit" class="btn btn-warning button-event-details">Delete event</button>
             </form>
             {{/if}}
 
@@ -40,7 +41,13 @@
         <div class="card-footer text-muted event-details-players">
             <h6 style="text-decoration:underline ;">Current players</h6>
 
-            <p>{{#each players}}{{this.username}}, {{/each}}</p>
+            <div class="current-players-image">
+                {{#each players}}
+
+                <img src="{{this.profileImage}}" alt="{{this.username}}" title="{{this.username}}">
+                {{/each}}
+
+            </div>
 
         </div>
     </div>
