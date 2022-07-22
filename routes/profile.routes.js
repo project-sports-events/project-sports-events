@@ -139,6 +139,8 @@ router.post("/edit", (req, res, next) => {
   const userId = req.session.user._id;
   User.findById(userId).then((data) => {
     data.profileImage = `/images/${profileImage}`;
+    //UPDATE USING CLOUDINARY
+    req.session.user.profileImage = `/images/${profileImage}`;
     data.save();
     res.redirect("/profile");
   });
