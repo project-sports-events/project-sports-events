@@ -66,10 +66,6 @@ router.get("/", userLogin, (req, res, next) => {
         }
       });
 
-      console.log("pending", pendingChosenSportsArr);
-      console.log("confirmed", confirmedChosenSportsArr);
-      // console.log(data);
-
       const eventDatesPending = [];
       const eventDatesConfirmed = [];
       const differencePending = [];
@@ -91,7 +87,6 @@ router.get("/", userLogin, (req, res, next) => {
       for (let i = 0; i < userEvents.pendingEvents.length; i++) {
         userEvents.pendingEvents[i].daysLeft = totalDaysPending[i];
         userEvents.pendingEvents[i].chosenSport = pendingChosenSportsArr[i];
-        // console.log(userEvents.pendingEvents[i].daysLeft);
       }
 
       userEvents.pendingEvents.sort((a, b) => a.daysLeft - b.daysLeft);
@@ -112,7 +107,6 @@ router.get("/", userLogin, (req, res, next) => {
       for (let i = 0; i < userEvents.confirmedEvents.length; i++) {
         userEvents.confirmedEvents[i].daysLeft = totalDaysConfirmed[i];
         userEvents.confirmedEvents[i].chosenSport = confirmedChosenSportsArr[i];
-        // console.log(userEvents.pendingEvents[i].daysLeft);
       }
 
       userEvents.confirmedEvents.sort((a, b) => a.daysLeft - b.daysLeft);
@@ -126,16 +120,14 @@ router.get("/", userLogin, (req, res, next) => {
 
 router.get("/edit", (req, res, next) => {
   const userId = req.session.user._id;
-  console.log(userId);
+
   User.findById(userId).then((data) => {
-    console.log(data);
     res.render("profile-edit", data);
   });
 });
 router.post("/edit", (req, res, next) => {
-  console.log(req.body);
   const { profileImage } = req.body;
-  console.log(profileImage);
+
   const userId = req.session.user._id;
   User.findById(userId).then((data) => {
     data.profileImage = `/images/${profileImage}`;

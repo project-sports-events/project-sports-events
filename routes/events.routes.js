@@ -9,7 +9,6 @@ router.get("/", (req, res, next) => {
     .then((data) => {
       const eventsPending = [];
       data.forEach((element) => {
-        // console.log(element.numberOfRequiredPlayers);
         if (element.numberOfRequiredPlayers > 0) {
           eventsPending.push(element);
         }
@@ -19,7 +18,6 @@ router.get("/", (req, res, next) => {
     .then((eventsPending) => {
       const chosenSportsArr = [];
 
-      console.log(eventsPending);
       eventsPending.forEach((element) => {
         if (element.typeOfSport === "football") {
           chosenSportsArr.push("9917");
@@ -33,7 +31,7 @@ router.get("/", (req, res, next) => {
       const eventDates = [];
       const difference = [];
       let date_2 = new Date();
-      // console.log(date_2);
+
       eventsPending.forEach((element) => {
         eventDates.push(new Date(element.date));
       });
@@ -53,13 +51,12 @@ router.get("/", (req, res, next) => {
         eventsPending[i].chosenSport = chosenSportsArr[i];
       }
       //CHECK TYPE OF SPORT
-    
+
       res.render("events", { eventsPending });
     });
 });
 
 router.get("/search", (req, res, next) => {
-  console.log(req.query);
   const { typeOfSport, location, price } = req.query;
 
   const filterObj = {};
@@ -83,7 +80,6 @@ router.get("/search", (req, res, next) => {
       .then((data) => {
         const eventsPending = [];
         data.forEach((element) => {
-          // console.log(element.numberOfRequiredPlayers);
           if (element.numberOfRequiredPlayers > 0) {
             eventsPending.push(element);
           }
@@ -94,7 +90,7 @@ router.get("/search", (req, res, next) => {
         const eventDates = [];
         const difference = [];
         let date_2 = new Date();
-        // console.log(date_2);
+
         eventsPending.forEach((element) => {
           eventDates.push(new Date(element.date));
         });
@@ -111,7 +107,6 @@ router.get("/search", (req, res, next) => {
 
         for (let i = 0; i < eventsPending.length; i++) {
           eventsPending[i].daysLeft = totalDays[i];
-          // console.log(eventsPending[i].daysLeft);
         }
         res.render("events", { eventsPending });
       })
@@ -122,9 +117,8 @@ router.get("/search", (req, res, next) => {
 });
 
 router.get("/sort", (req, res, next) => {
-  console.log(req.query);
   const { sortEvent } = req.query;
-  console.log(sortEvent);
+
   Event.find({})
     .sort(sortEvent)
     .then((data) => {
@@ -138,7 +132,7 @@ router.get("/sort", (req, res, next) => {
       const eventDates = [];
       const difference = [];
       let date_2 = new Date();
-      // console.log(date_2);
+
       eventsPending.forEach((element) => {
         eventDates.push(new Date(element.date));
       });
@@ -155,7 +149,6 @@ router.get("/sort", (req, res, next) => {
 
       for (let i = 0; i < eventsPending.length; i++) {
         eventsPending[i].daysLeft = totalDays[i];
-        console.log(eventsPending[i].daysLeft);
       }
       res.render("events", { eventsPending });
     });
@@ -166,7 +159,6 @@ router.get("/create", (req, res, next) => {
 });
 
 router.post("/create", (req, res, next) => {
-  // console.log(req.body);
   const {
     typeOfSport,
     title,
@@ -189,38 +181,27 @@ router.post("/create", (req, res, next) => {
     time,
   })
     .then((data) => {
-      console.log(data);
       data.players.push(data.author);
       data.save();
       Event.find().then((data) => {
-        console.log(data);
         res.redirect("/events"), { data };
       });
     })
-    // .then(
-    //   (data) => console.log("Saved into the database! ", data),
-    //   res.redirect("/events")
-    // )
     .catch((err) => {
       console.log(err);
     });
-
-  // console.log(typeOfSport);
 });
 
 router.get("/:id", (req, res, next) => {
-  // console.log(req.params);
   const { id } = req.params;
   const userId = req.session.user._id;
-  // console.log(userId);
-  // console.log(id);
+
   Event.findById(id)
     .populate("players")
     .populate("author")
     .then((data) => {
       let isCreator = false;
-      console.log("im here", data);
-      console.log(data.author._id);
+
       if (data.author._id == userId) {
         isCreator = true;
       }
@@ -231,11 +212,10 @@ router.get("/:id", (req, res, next) => {
           isBooked = true;
         }
       });
-      // console.log("this is playersArr", playersArr);
-      // console.log(data.isBooked);
+
       data.isBooked = isBooked;
       data.isCreator = isCreator;
-      console.log("i am here now", data);
+
       res.render("event-details", data);
     });
 });
@@ -245,10 +225,8 @@ router.post("/:id/book", (req, res, next) => {
   const userId = req.session.user._id;
 
   Event.findById(eventId).then((data) => {
-    console.log(data);
     const playersArr = data.players;
-    // console.log(playersArr.indexOf(userId));
-    // console.log(data.author);
+
     //check if user has already booked
     let isBooked = false;
     if (data.numberOfRequiredPlayers > 0) {
@@ -259,15 +237,11 @@ router.post("/:id/book", (req, res, next) => {
         res.redirect(`/events/${eventId}`);
         // res.redirect("/profile");
       } else {
-        console.log("user already exists");
         res.redirect(`/events/${eventId}`);
       }
     } else {
-      console.log("player list is full");
       res.redirect(`/events/${eventId}`);
     }
-
-    // console.log(playersArr);
   });
 });
 
@@ -278,7 +252,6 @@ router.post("/:id/cancel", (req, res, next) => {
   const userId = req.session.user._id;
 
   Event.findById(eventId).then((data) => {
-    // console.log("this is ", data);
     const playersArr = data.players;
     let isCreator = false;
 
@@ -295,12 +268,9 @@ router.post("/:id/cancel", (req, res, next) => {
 // form edit:
 router.get("/:id/edit", (req, res, next) => {
   const eventId = req.params.id;
-  console.log(eventId);
+
   Event.findById(eventId)
     .then((data) => {
-      console.log("this is ", data);
-      // console.log(data.date);
-
       res.render("event-edit", data);
     })
     .catch((error) => next(error));
