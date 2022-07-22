@@ -24,7 +24,7 @@ require("./config")(app);
 const capitalized = require("./utils/capitalized");
 const projectName = "project-sports-event";
 
-app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
+// app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 const findUserSession = require("./middleware/checkUserLoginDetails");
 app.use("/", findUserSession);
