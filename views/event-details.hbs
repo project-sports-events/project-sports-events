@@ -1,34 +1,47 @@
-<h1>Event details page</h1>
+<div class="practice-container">
+    <div class="card text-center event-details-card">
+        <div class="card-header">
+            Date: {{date}}, {{time}}
+        </div>
+        <div class="card-body">
+            <h2 class="card-title event-details-title">{{title}}</h2>
+            <h6 class="card-text">{{location}}</h6>
+            <p>Price: £{{price}}</p>
+            <p>Required no. of players: {{numberOfRequiredPlayers}}</p>
 
 
-<div>
-    <h1>{{typeOfSport}}</h1>
-    <h2>{{title}}</h2>
-    <h3>Creator of event: {{author.username}}</h3>
-    <p>Location: {{location}}</p>
-    <p>Price: £{{price}}</p>
-    <p>Required no. of players: {{numberOfRequiredPlayers}}</p>
-    <p>Date: {{date}}</p>
-    <p>Time: {{time}}</p>
-    <div>
-        <h3>Current players</h3>
-        {{#each players}}
-        <p>{{this.username}}</p>
-        {{/each}}
+            {{#if isBooked}}
+            <h3>Booked &#9989;</h3>
+            <form action="/events/{{_id}}/remove" method="post">
+                <button type="submit" class="btn btn-secondary">Remove myself</button>
+            </form>
+            {{else}}
+
+            <form action="/events/{{this._id}}/book" method="POST">
+
+                <button type="submit" name="players" id="book-button" class="btn btn-success">Book</button>
+            </form>
+            {{/if}}
+
+            {{#if isCreator}}
+
+            <form action="/events/{{_id}}/edit" method="GET">
+                <button type="submit" class="btn btn-secondary">Edit event</button>
+            </form>
+            <form action="/events/{{_id}}/delete" method="POST">
+                <button type="submit" class="btn btn-warning">Delete event</button>
+            </form>
+            {{/if}}
+
+
+
+
+        </div>
+        <div class="card-footer text-muted event-details-players">
+            <h6 style="text-decoration:underline ;">Current players</h6>
+
+            <p>{{#each players}}{{this.username}}, {{/each}}</p>
+
+        </div>
     </div>
-    {{#if isBooked}}
-    <h3>you are booked &#9989;</h3>
-    {{else}}
-
-    <form action="/events/{{this._id}}/book" method="POST">
-
-        <button type="submit" name="players" id="book-button">Book</button>
-    </form>
-    {{/if}}
-
-    <a href="/events/{{this._id}}/event-edit">Edit</a>
-    <form action="/events/{{_id}}/event-delete" method="POST">
-        <button type="submit">Delete</button>
-    </form>
-
 </div>

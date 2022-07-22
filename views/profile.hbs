@@ -1,34 +1,50 @@
-<img src={{session.profileImage}} alt="">
-<p>{{session.username}}</p>
-
-<div>
-    <h1>Pending bookings</h1>
-
-    {{#each this.pendingEvents}}
-    <div>
-        <h1>{{this.typeOfSport}}</h1>
-        <h2>{{this.title}}</h2>
-        <p>{{this.location}}</p>
-        <p>{{this.price}}</p>
-        <p>{{date}}</p>
-        <a href="/events/{{this._id}}">Show details</a>
+<div class="profile-container">
+    <div class="profile-info">
+        <img src="{{session.profileImage}}" alt="">
+        <h5>{{session.username}}</h5>
     </div>
-    {{/each}}
+    <div class="profile-bookings">
+        <div class="profile-pending">
+            <h3>Pending Bookings</h3>
 
+            <div class="flip-card-container">
 
-</div>
+                {{#each this.pendingEvents}}
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <p>{{this.title}}</p>
+                            <p>{{this.daysLeft}} days away</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <a href="/events/{{this._id}}">Show details</a>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
 
-<div>
-    <h1>Confirmed bookings</h1>
-    {{#each this.confirmedEvents}}
-    <div>
-        <h1>{{this.typeOfSport}}</h1>
-        <h2>{{this.title}}</h2>
-        <p>{{this.location}}</p>
-        <p>{{this.price}}</p>
-        <p>{{date}}</p>
-        <a href="/events/{{this._id}}">Show details</a>
+            </div>
+
+        </div>
+        <div class="profile-confirmed">
+            <h3>Confirmed Bookings</h3>
+            <div class="flip-card-container">
+
+                {{#each this.confirmedEvents}}
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <p>{{this.title}}</p>
+                            <p>{{this.daysLeft}} days away</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <a href="/events/{{this._id}}">Show details</a>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
     </div>
-    {{/each}}
-
 </div>

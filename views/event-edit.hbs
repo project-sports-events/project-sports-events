@@ -1,6 +1,4 @@
-<h2>{{title}}</h2>
-
-<form action="/events/{{_id}}/event-edit" method="post">
+<form action="/events/{{_id}}/edit" method="post">
     <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
             <div class="row justify-content-center align-items-center h-100">
@@ -80,42 +78,4 @@
             </div>
         </div>
     </section>
-</form>
-
-
-
-
-
-<form action="/events/{{_id}}/event-edit" method="post">
-
-    <label for="edit-type-of-sport">Select sport:</label>
-    <select name="typeOfSport" id="edit-type-of-sport">
-        <option value="" disabled selected>Select your Sport</option>
-        <option value="football">football</option>
-        <option value="basketball">basketball</option>
-        <option value="tennis">tennis</option>
-    </select>
-    <br>
-
-    <label for="edit-title">Title:</label>
-    <input type="text" id="edit-title" name="title" value="{{title}}"><br>
-
-    <label for="edit-location">Location:</label>
-    <input type="text" id="edit-location" name="location" value="{{location}}"><br>
-
-    <label for="edit-required-players">No. of required players:</label>
-    <input type="number" id="edit-required-players" min="0" name="numberOfRequiredPlayers"
-        value="{{numberOfRequiredPlayers}}"><br>
-
-    <label for="edit-price">Price:</label>
-    <input type="number" id="edit-price" name="price" min="0" value="{{price}}"><br>
-
-
-    <label for="edit-date">Date:</label>
-    <input type="date" id="edit-date" name="date" value="{{date}}">
-    <label for="edit-time">Time:</label>
-    <input type="time" id="edit-time" name="time" value="{{time}}">
-
-
-    <button type='submit'>Save changes</button>
 </form>

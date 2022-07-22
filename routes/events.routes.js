@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { events } = require("../models/Event.model");
 const Event = require("../models/Event.model");
 // const isLoggedIn = require("../middleware/isLoggedIn");
 /* GET home page */
@@ -16,12 +17,36 @@ router.get("/", (req, res, next) => {
       return eventsPending;
     })
     .then((eventsPending) => {
-      console.log("these are ", eventsPending);
+      const eventDates = [];
+      const difference = [];
+      let date_2 = new Date();
+      // console.log(date_2);
+      eventsPending.forEach((element) => {
+        eventDates.push(new Date(element.date));
+      });
+
+      eventDates.forEach((element) => {
+        difference.push(element.getTime() - date_2.getTime());
+      });
+
+      const totalDays = [];
+      difference.forEach((element) => {
+        let totalDaysCalc = Math.ceil(element / (1000 * 3600 * 24));
+        totalDays.push(totalDaysCalc);
+      });
+
+      for (let i = 0; i < eventsPending.length; i++) {
+        eventsPending[i].daysLeft = totalDays[i];
+        console.log(eventsPending[i].daysLeft);
+      }
+      //CHECK TYPE OF SPORT
+
       res.render("events", { eventsPending });
     });
 });
 
 router.get("/search", (req, res, next) => {
+  console.log(req.query);
   const { typeOfSport, location, price } = req.query;
 
   const filterObj = {};
@@ -53,12 +78,74 @@ router.get("/search", (req, res, next) => {
         return eventsPending;
       })
       .then((eventsPending) => {
+        const eventDates = [];
+        const difference = [];
+        let date_2 = new Date();
+        // console.log(date_2);
+        eventsPending.forEach((element) => {
+          eventDates.push(new Date(element.date));
+        });
+
+        eventDates.forEach((element) => {
+          difference.push(element.getTime() - date_2.getTime());
+        });
+
+        const totalDays = [];
+        difference.forEach((element) => {
+          let totalDaysCalc = Math.ceil(element / (1000 * 3600 * 24));
+          totalDays.push(totalDaysCalc);
+        });
+
+        for (let i = 0; i < eventsPending.length; i++) {
+          eventsPending[i].daysLeft = totalDays[i];
+          console.log(eventsPending[i].daysLeft);
+        }
         res.render("events", { eventsPending });
       })
       .catch((err) => {
         console.log(err);
       });
   }
+});
+
+router.get("/sort", (req, res, next) => {
+  console.log(req.query);
+  const { sortEvent } = req.query;
+  console.log(sortEvent);
+  Event.find({})
+    .sort(sortEvent)
+    .then((data) => {
+      const eventsPending = [];
+      data.forEach((element) => {
+        eventsPending.push(element);
+      });
+      return eventsPending;
+    })
+    .then((eventsPending) => {
+      const eventDates = [];
+      const difference = [];
+      let date_2 = new Date();
+      // console.log(date_2);
+      eventsPending.forEach((element) => {
+        eventDates.push(new Date(element.date));
+      });
+
+      eventDates.forEach((element) => {
+        difference.push(element.getTime() - date_2.getTime());
+      });
+
+      const totalDays = [];
+      difference.forEach((element) => {
+        let totalDaysCalc = Math.ceil(element / (1000 * 3600 * 24));
+        totalDays.push(totalDaysCalc);
+      });
+
+      for (let i = 0; i < eventsPending.length; i++) {
+        eventsPending[i].daysLeft = totalDays[i];
+        console.log(eventsPending[i].daysLeft);
+      }
+      res.render("events", { eventsPending });
+    });
 });
 
 router.get("/create", (req, res, next) => {
@@ -118,6 +205,12 @@ router.get("/:id", (req, res, next) => {
     .populate("players")
     .populate("author")
     .then((data) => {
+      let isCreator = false;
+      console.log("im here", data);
+      console.log(data.author._id);
+      if (data.author._id == userId) {
+        isCreator = true;
+      }
       const playersArr = data.players;
       let isBooked = false;
       playersArr.forEach((element) => {
@@ -128,7 +221,8 @@ router.get("/:id", (req, res, next) => {
       // console.log("this is playersArr", playersArr);
       // console.log(data.isBooked);
       data.isBooked = isBooked;
-
+      data.isCreator = isCreator;
+      console.log("are they creator", data.isCreator);
       res.render("event-details", data);
     });
 });
@@ -164,8 +258,29 @@ router.post("/:id/book", (req, res, next) => {
   });
 });
 
+//Remove user from booking
+
+router.post("/:id/remove", (req, res, next) => {
+  const eventId = req.params.id;
+  const userId = req.session.user._id;
+
+  Event.findById(eventId).then((data) => {
+    // console.log("this is ", data);
+    const playersArr = data.players;
+    let isCreator = false;
+
+    if (playersArr.indexOf(userId) > -1) {
+      let userIndexPosition = playersArr.indexOf(userId);
+      data.players.splice(userIndexPosition, 1);
+      data.numberOfRequiredPlayers += 1;
+      data.save();
+      res.redirect(`/events/${eventId}`);
+    }
+  });
+});
+
 // form edit:
-router.get("/:id/event-edit", (req, res, next) => {
+router.get("/:id/edit", (req, res, next) => {
   const eventId = req.params.id;
   console.log(eventId);
   Event.findById(eventId)
@@ -178,7 +293,7 @@ router.get("/:id/event-edit", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.post("/:id/event-edit", (req, res, next) => {
+router.post("/:id/edit", (req, res, next) => {
   const eventId = req.params.id;
   const {
     typeOfSport,
@@ -208,12 +323,12 @@ router.post("/:id/event-edit", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-module.exports = router;
-
 // form delete:
-router.post("/:id/event-delete", (req, res, next) => {
+router.post("/:id/delete", (req, res, next) => {
   const eventId = req.params.id;
   Event.findByIdAndDelete(eventId)
-    .then(() => res.redirect("/"))
+    .then(() => res.redirect("/events"))
     .catch((error) => next(error));
 });
+
+module.exports = router;
