@@ -1,21 +1,81 @@
-<h2>{{title}}</h2>
-<form action="/events/{{_id}}/event-edit" method="post">
-    <select name="typeOfSport" id="type-of-sport">
-        <option value="" disabled selected>Select your Sport</option>
-        <option value="football">football</option>
-        <option value="basketball">basketball</option>
-        <option value="tennis">tennis</option>
-    </select>
-    <br>
+<form action="/events/{{_id}}/edit" method="post">
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" style="text-align: center ;">Edit your event
+                            </h3>
+                            <form>
+                                <div class="row">
 
-    <input type="text" id="event-title" name="title" value="{{title}}"><br>
 
-    <input type="text" id="event-location" name="location" value="{{location}}"><br>
-    <input type="number" id="event-required-players" min="0" name="numberOfRequiredPlayers"
-        value="{{numberOfRequiredPlayers}}"><br>
-    <input type="number" id="event-price" name="price" min="0" value="{{price}}"><br>
-    <label for="event-time">Event: Date & Time</label>
-    <input type="datetime-loc" id="event-time" name="date" value="{{dateFormat}}">
-
-    <button type='submit'>Save changes</button>
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-outline">
+                                            <select class="select form-control-lg" name="typeOfSport" id="type-of-sport"
+                                                style="width: 100%;" required>
+                                                <option value="" disabled selected>Select your Sport</option>
+                                                <option value="football">football</option>
+                                                <option value="basketball">basketball</option>
+                                                <option value="tennis">tennis</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" id="title" class="form-control form-control-lg"
+                                                name="title" value="{{title}}" required />
+                                            <label class="form-label" for="title">Title</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" id="location" class="form-control form-control-lg"
+                                                name="location" value="{{location}}" required />
+                                            <label class="form-label" for="location">Location</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" id="no.ofrequiredplayers"
+                                                class="form-control form-control-lg" name="numberOfRequiredPlayers"
+                                                value="{{numberOfRequiredPlayers}}" required />
+                                            <label class="form-label" for="no.ofrequiredplayers">No. of required
+                                                players</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="number" id="price" class="form-control form-control-lg"
+                                                name="price" value="{{price}}" required />
+                                            <label class="form-label" for="firstName">Price</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="date" id="event-date" class="form-control form-control-lg"
+                                                name="date" value="{{date}}" required />
+                                            <label class="form-label" for="event-date">Date</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="time" id="event-time" class="form-control form-control-lg"
+                                                name="time" value="{{time}}" required />
+                                            <label class="form-label" for="event-time">Time</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-4 pt-2">
+                                        <input class="btn btn-primary btn-lg" type="submit" value="Submit"
+                                            style="width: 100% ;" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </form>

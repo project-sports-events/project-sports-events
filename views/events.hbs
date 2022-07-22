@@ -1,32 +1,76 @@
-<h1>Hello World</h1>
-
-<a href="/events/create">create event</a>
-
 {{!-- filter form --}}
-<form action="/events/search" method="GET">
 
-    <select name="typeOfSport">
-        <option value="" disabled selected>Search for sport</option>
-        <option value="football">football</option>
-        <option value="basketball">basketball</option>
-        <option value="tennis">tennis</option>
-    </select>
+<div class="filter-sort">
+    <form action="/events/search" method="GET">
+        <ul class="nav ">
+            <li class="nav-item mr-2">
+                <h5 style="font-weight:700 ;">Filter:</h5>
+            </li>
+            <li class="nav-item mr-2">
+                <select name="typeOfSport">
+                    <option value="" disabled selected>Search for sport</option>
+                    <option value="football">football</option>
+                    <option value="basketball">basketball</option>
+                    <option value="tennis">tennis</option>
+                </select>
+            </li>
+            <li class="nav-item mr-2">
+                <input type="text" name="location" placeholder="location">
+            </li>
+            <li class="nav-item mr-2">
+                <input type="number" id="event-price" name="price" min="0" placeholder="price">
+            </li>
+            <li class="nav-item mr-2">
+                <input type="submit" value="Search" class="filter-button">
+            </li>
+        </ul>
+    </form>
 
-    <input type="text" name="location" placeholder="location">
-    <input type="number" id="event-price" name="price" min="0" placeholder="price">
-    <input type="submit" value="search">
-</form>
-
-{{#each eventsPending}}
-<div>
-    <h1>{{this.typeOfSport}}</h1>
-    <h2>{{this.title}}</h2>
-    <h3>{{this.author.username}}</h3>
-    <p>{{this.location}}</p>
-    <p>{{this.price}}</p>
-    <p>{{this.numberOfRequiredPlayers}}</p>
-    <a href="/events/{{this._id}}"> Show Details</a>
-
+    {{!-- SORT FORM --}}
+    <div class="sort-by">
+        <h5 style="font-weight:700 ;">Sort:</h5>
+        <form action="/events/sort" method="get">
+              <input type="radio" id="event-sort-date" name="sortEvent" value="date">
+              <label for="event-sort-date">Date</label>
+              <input type="radio" id="event-sort-price" name="sortEvent" value="price">
+              <label for="event-sort-price">Price</label>
+            <input type="submit" value="Sort" class="filter-button">
+        </form>
+    </div>
 </div>
 
-{{/each}}
+
+{{!-- PRACTICE EVENTS --}}
+
+<div class="events-container">
+    <div class="row">
+        {{#each eventsPending}}
+        <div class="col-md-3">
+            <div class="card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon"> <i class="bx bxl-dribbble"></i> </div>
+                        <div class="ms-2 c-details">
+                            <h6 class="mb-0" style="text-transform:uppercase;">{{this.typeOfSport}}</h6>
+
+                        </div>
+                    </div>
+                    <div class="badge"> <span>&#{{this.chosenSport}};</span> </div>
+                </div>
+                <div class="mt-3">
+                    <h3 class="heading">{{this.title}}</h3>
+                    <div class="mt-4">
+
+                        <div class="mt-3">
+                            <p>Players required: {{this.numberOfRequiredPlayers}}</p>
+                            <span>{{this.daysLeft}} days away</span>
+                        </div>
+                        <a href="/events/{{this._id}}">Show event details</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+</div>

@@ -9,6 +9,9 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
+//isloggedin
+const isLoggedIn = require("./middleware/isLoggedIn");
+
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
@@ -34,7 +37,8 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const eventRoutes = require("./routes/events.routes");
-app.use("/events", eventRoutes);
+
+app.use("/events", isLoggedIn, eventRoutes);
 
 const profileRoutes = require("./routes/profile.routes");
 app.use("/profile", profileRoutes);
